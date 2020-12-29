@@ -33,7 +33,7 @@ namespace AspNetCoreWithEF
             var services = scope.ServiceProvider;
             try
             {
-                var context = services.GetRequiredService<AspNetCoreWithEFContext>();
+                var context = services.GetRequiredService<AppDbContext>();
                 DbSeeder.Seed(context);
             }
             catch (Exception ex)

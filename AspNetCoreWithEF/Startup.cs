@@ -38,7 +38,7 @@ namespace AspNetCoreWithEF
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDbContext<AspNetCoreWithEFContext>(o =>
+            services.AddDbContext<AppDbContext>(o =>
                 o.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddCors(o => 

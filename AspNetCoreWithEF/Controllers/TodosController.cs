@@ -16,9 +16,9 @@ namespace AspNetCoreWithEF.Controllers
     [ApiController]
     public class TodosController : ControllerBase
     {
-        private readonly AspNetCoreWithEFContext _context;
+        private readonly AppDbContext _context;
 
-        public TodosController(AspNetCoreWithEFContext context)
+        public TodosController(AppDbContext context)
         {
             _context = context;
         }

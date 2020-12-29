@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreWithEF.Data.EF
 {
-    public class AspNetCoreWithEFContext:DbContext
+    public class AppDbContext:DbContext
     {
-        public AspNetCoreWithEFContext(DbContextOptions<AspNetCoreWithEFContext> o) : base(o) { }
+        public AppDbContext(DbContextOptions<AppDbContext> o) : base(o) { }
 
 
         public virtual DbSet<Todo> Todos { get; set; }

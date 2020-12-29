@@ -8,7 +8,7 @@ namespace AspNetCoreWithEF.Data.EF
 {
     public static class DbSeeder
     {
-        public static void Seed(AspNetCoreWithEFContext context)
+        public static void Seed(AppDbContext context)
         {
             context.Database.EnsureCreated();
 

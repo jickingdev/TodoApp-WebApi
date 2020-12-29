@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AspNetCoreWithEF.Data.EF;
 using AspNetCoreWithEF.Data.Entities;
+using Mapster;
+using AspNetCoreWithEF.Data.DTO;
 
 namespace AspNetCoreWithEF.Controllers
 {
@@ -45,14 +47,18 @@ namespace AspNetCoreWithEF.Controllers
         // PUT: api/Todos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodo(Guid id, Todo todo)
+        public async Task<IActionResult> PutTodo(Guid id, TodoRequest todo)
         {
-            if (id != todo.Id)
+            if (id == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            _context.Entry(todo).State = EntityState.Modified;
+            //MAP
+            var todoToEdit = todo.Adapt<Todo>();
+            todoToEdit.Id = id;
+
+            _context.Entry(todoToEdit).State = EntityState.Modified;
 
             try
             {
@@ -76,12 +82,17 @@ namespace AspNetCoreWithEF.Controllers
         // POST: api/Todos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Todo>> PostTodo(Todo todo)
+        public async Task<ActionResult<Todo>> PostTodo(TodoRequest todo)
         {
-            _context.Todos.Add(todo);
+            //VALIDATE
+
+            //MAP
+            var newTodo = todo.Adapt<Todo>();
+
+            _context.Todos.Add(newTodo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTodo", new { id = todo.Id }, todo);
+            return CreatedAtAction("GetTodo", new { id = newTodo.Id }, newTodo);
         }
 
         // DELETE: api/Todos/5

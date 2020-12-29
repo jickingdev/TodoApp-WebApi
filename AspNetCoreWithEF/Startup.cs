@@ -1,5 +1,6 @@
 using AspNetCoreWithEF.Data.EF;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +36,13 @@ namespace AspNetCoreWithEF
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AspNetCoreWithEF", Version = "v1" });
             });
 
-            services.AddDbContext<AspNetCoreWithEFContext>(o => {
-                o.UseSqlServer(Configuration.GetConnectionString("Default"));
-            });
-
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddDbContext<AspNetCoreWithEFContext>(o =>
+                o.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddCors(o => 
+                o.AddDefaultPolicy(c => c.AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +58,8 @@ namespace AspNetCoreWithEF
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

@@ -42,7 +42,7 @@ namespace AspNetCoreWithEF
                 o.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddCors(o => 
-                o.AddDefaultPolicy(c => c.AllowAnyOrigin()));
+                o.AddDefaultPolicy(c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
